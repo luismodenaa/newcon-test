@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "7mNTKbdeM6L/klGCMGJayxKU59yMwwZHCwM8NYhePCk=",
+  "Source": "newcon-api",
+  "BasePath": "_content/newcon-api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
