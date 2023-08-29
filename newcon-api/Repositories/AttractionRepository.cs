@@ -66,7 +66,11 @@ namespace newcon_api.Repositories
 
         public async Task<List<AttractionsModel>> GetAttractions(int page, int total)
         {
-            return await _dbContext.Attractions.Skip(page * total).Take(total).ToListAsync();
+            return await _dbContext.Attractions
+                .OrderByDescending(attraction => attraction.Id)
+                .Skip(page * total)
+                .Take(total)
+                .ToListAsync();
         }
 
         public async Task<List<AttractionsModel>> SearchAttractions(string search, int page, int total)

@@ -18,7 +18,13 @@ namespace newcon_api
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: "myPolicy", policy =>
+                {
+                    policy.WithOrigins("http://localhost:5173").AllowAnyHeader().AllowAnyMethod();
+                });
+            });
             builder.Services.AddEntityFrameworkSqlite()
                 .AddDbContext<AttractionContext>(
                 options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))
@@ -34,7 +40,7 @@ namespace newcon_api
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseCors("myPolicy");
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
