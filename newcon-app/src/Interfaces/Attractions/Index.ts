@@ -22,3 +22,19 @@ export interface IAttractionsProps {
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
+
+export interface IAttractionAdd {
+  name: string;
+  description: string;
+  adress: string;
+  city: string;
+  state: string;
+}
+
+export interface IAttractionUpdate {
+  name?: string;
+  description?: string;
+  adress?: string;
+  city?: string;
+  state?: string;
+}

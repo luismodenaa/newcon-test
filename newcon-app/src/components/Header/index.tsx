@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Header = ({ back }: { back: boolean }) => {
   return (
-    <header className="flex items-center justify-between p-16">
+    <header className="flex items-center justify-around p-16">
       <img src={logo} width={100} height={100} alt="newcon-logo" />
       {back ? (
         <Link
