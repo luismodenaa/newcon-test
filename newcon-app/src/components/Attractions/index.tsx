@@ -7,7 +7,13 @@ import notfound from "../../assets/notfound.svg";
 import loadingSvg from "../../assets/loading.svg";
 import ModalAttraction from "../ModalAttraction";
 
-const Attractions = () => {
+const Attractions = ({
+  search,
+  handleSearch,
+}: {
+  search: string;
+  handleSearch: boolean;
+}) => {
   const [attractions, setAttractions] = useState<IAttraction[]>([]);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -32,9 +38,35 @@ const Attractions = () => {
     }
   };
 
+  const searchAttractions = async () => {
+    try {
+      setLoading(true);
+      const response = await api.get<IAttraction[]>(
+        `attractions/search/${search}`,
+        {
+          params: {
+            page: page,
+            total: 8,
+          },
+        }
+      );
+
+      setLoading(false);
+      setAttractions(response.data);
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     getAttractions();
-  }, [page]);
+  }, [page, search.length === 0]);
+
+  useEffect(() => {
+    searchAttractions();
+    if (search.length === 0) getAttractions();
+  }, [handleSearch, search]);
 
   const closeModal = () => {
     setOpenModal(false);
@@ -47,7 +79,7 @@ const Attractions = () => {
           <img src={loadingSvg} alt="carregando..." width={100} height={100} />
         ) : attractions.length ? (
           <>
-            <ul className="grid grid-cols-4 gap-4 p-6 rounded-lg h-[30rem]">
+            <ul className="grid grid-cols-4 gap-4 p-6 rounded-lg h-[30rem] overflow-auto">
               {attractions?.map((attraction: IAttraction) => (
                 <AttractionCard
                   key={attraction.id}
